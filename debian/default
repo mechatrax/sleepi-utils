@@ -1,0 +1,12 @@
+# Defaults for sleepi-utils initscript
+# sourced by /etc/init.d/sleepi-utils
+# installed at /etc/default/sleepi-utils by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+#
+
+RTC_DEVICE=rtc0
+
+I2C_ADDRESS=0x69
+

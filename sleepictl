@@ -1,0 +1,150 @@
+#!/bin/sh
+
+#
+# slee-Pi module control script
+# 
+
+CONF_FILE=/etc/default/sleepi-utils
+
+if [ -e $CONF_FILE ]
+then
+    . $CONF_FILE
+fi
+
+VERSION="0.1"
+
+GET_USAGE="
+  --get {alarm,button,restart,timeout,voltage}
+    alarm      get alarm time
+    button     get seconds of button is pressed
+    restart    get auto restart flag
+    timeout    get timeout seconds
+    voltage     get power supply voltage [mV]
+"
+SET_USAGE="
+  --set {alarm,restart,timeout} [OPTIONS]
+    alarm <STRING>      set alarm time described by STRING
+    restart <0,1>       set auto restart flag
+    timeout <0..255>    set timeout seconds
+"
+
+USAGE="
+Usage: sleepictl [COMMAND]
+
+Commands:
+${GET_USAGE}${SET_USAGE}
+  --help, -h    display help and exit
+
+  --version, -v    display version and exit
+"
+
+SET_COMMAND="i2cset -y 1 $I2C_ADDRESS"
+GET_COMMAND="i2cget -y 1 $I2C_ADDRESS"
+ALARM_PATH="/sys/class/rtc/${RTC_DEVICE}/wakealarm"
+
+#
+# Usage: reg_set [OPTION] [VALUE]
+#
+reg_set ()
+{
+    mode="b"
+    
+    case $1 in
+    alarm)
+        if [ ! -e $ALARM_PATH ]
+        then
+            echo "cannot access $ALARM_PATH" >&2
+            return 1
+        fi 
+        date +%s -d "$2" > $ALARM_PATH
+        return $?
+        ;;
+    restart)
+        REG_ADDR=0x05
+        ;;
+    timeout)
+        REG_ADDR=0x06
+        ;;
+    *)
+        echo "unknown option $1" >&2
+        return 1
+        ;;
+    esac
+    
+    $SET_COMMAND $REG_ADDR $2 $mode
+}
+
+#
+# Usage: reg_get [OPTION]
+#
+reg_get ()
+{
+    mode="b"
+    
+    case $1 in
+    alarm)
+        if [ ! -e $ALARM_PATH ]
+        then
+            echo "cannot access $ALARM_PATH" >&2
+            return 1
+        fi 
+        epoch=`cat $ALARM_PATH`
+        if [ $epoch ]
+        then
+            date -d @$epoch
+        fi
+        return $?
+        ;;
+    voltage)
+        REG_ADDR=0x02
+        mode="w"
+        ;;
+    button)
+        REG_ADDR=0x04
+        ;;
+    restart)
+        REG_ADDR=0x05
+        ;;
+    timeout)
+        REG_ADDR=0x06
+        ;;
+    *)
+        echo "unknown option $1" >&2
+        return 1
+        ;;
+    esac
+    
+    value=`$GET_COMMAND $REG_ADDR $mode`
+    if [ $? -ne 0 ]
+    then
+        return 1
+    fi
+    
+    printf "%d\n" $value
+    #printf "%d\n" `$GET_COMMAND $REG_ADDR $mode`
+}
+
+#
+# execute command
+#
+case $1 in
+--get)
+    reg_get "$2"
+    ;;
+--set)
+    reg_set "$2" "$3"
+    ;;
+-v|--version)
+    echo "sleepictl version $VERSION"
+    ;;
+*)
+    echo "$USAGE"
+    ;;
+esac
+
+if [ $? -ne 0 ]
+then
+    echo "error: command failure" >&2
+    exit 1
+fi
+
