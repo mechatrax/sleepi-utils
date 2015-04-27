@@ -1,3 +1,9 @@
+sleepi-utils (0.1-2.1) unstable; urgency=low
+
+  * Modify defaults description
+
+ -- Masahiro Honda <honda@mechatrax.com>  Mon, 27 Apr 2015 09:40:21 +0000
+
 sleepi-utils (0.1-2) unstable; urgency=low
 
   * Add init.d script
