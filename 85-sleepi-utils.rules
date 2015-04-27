@@ -1,0 +1,1 @@
+KERNEL=="rtc*", RUN+="/lib/udev/sleepi-utils.sh $name"

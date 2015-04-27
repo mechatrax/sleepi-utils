@@ -9,4 +9,5 @@ Homepage: http://www.mechatrax.com/
 Package: sleepi-utils
 Architecture: all
 Depends: ${misc:Depends}, sleepi-firmware (>= 0.1), i2c-tools (>= 3.1.0)
+Conflicts: fake-hwclock
 Description: Utilities for slee-Pi
