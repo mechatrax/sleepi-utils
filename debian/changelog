@@ -1,0 +1,18 @@
+sleepi-utils (0.1-2.1) unstable; urgency=low
+
+  * Modify defaults description
+
+ -- Masahiro Honda <honda@mechatrax.com>  Mon, 27 Apr 2015 09:40:21 +0000
+
+sleepi-utils (0.1-2) unstable; urgency=low
+
+  * Add init.d script
+  * Add udev rules
+
+ -- Masahiro Honda <honda@mechatrax.com>  Fri, 24 Apr 2015 12:09:58 +0000
+
+sleepi-utils (0.1-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Masahiro Honda <honda@mechatrax.com>  Thu, 23 Apr 2015 10:17:47 +0000

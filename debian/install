@@ -1,0 +1,3 @@
+./sleepictl /usr/sbin/
+./sleepi-utils.sh /lib/udev/
+./85-sleepi-utils.rules /lib/udev/rules.d/

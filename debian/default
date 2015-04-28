@@ -1,0 +1,27 @@
+# Defaults for sleepi-utils initscript
+# sourced by /etc/init.d/sleepi-utils
+
+#
+# slee-Pi RTC device name
+#
+RTC_DEVICE=rtc0
+
+#
+# slee-Pi power management module I2C address
+#
+# DIP1 / DIP2 = I2C address
+# OFF  / OFF  = 0x69
+# ON   / OFF  = 0x6A
+# OFF  / ON   = 0x69
+# ON   / ON   = Disabled
+# 
+I2C_ADDRESS=0x69
+
+#
+# slee-Pi RTC synchronization
+#
+# HCTOSYS=yes : enable the synchronization to system clock from rtc
+# HCTOSYS=no  : disable the synchronization to system clock from rtc
+#
+HCTOSYS=yes
+
