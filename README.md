@@ -87,10 +87,10 @@ slee-Pi を操作するためのツール類を提供します。
   
   + --version, -v : バージョンを表示します。   
 
-* /usr/share/doc/sleepi-utils/copyright  
+* /usr/share/doc/sleepi-utils/changelog.Debian.gz  
   パッケージの変更履歴を記録したファイルです。  
 
-* /usr/share/doc/sleepi-utils/changelog.Debian.gz  
+* /usr/share/doc/sleepi-utils/copyright  
   ソースの著作権とライセンスを記載したファイルです。  
 
 * /lib/udev/sleepi-utils.sh  
